@@ -130,6 +130,7 @@
                 <RadioButton
                     android:id="@+id/radio_min"
                     android:text="Giá thấp đến cao"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

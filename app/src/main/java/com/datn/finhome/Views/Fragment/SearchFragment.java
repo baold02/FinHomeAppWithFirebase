@@ -1,6 +1,7 @@
 package com.datn.finhome.Views.Fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -68,8 +69,8 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
     DatabaseReference reference;
     RecyclerView recyclerView;
     Toolbar toolbar;
-    SearchView searchView;
     Boolean gender = true;
+    SearchView searchView;
     Spinner spinnerTinh, spinnerHuyen, spinnerXa;
     private ArrayList<String> getStateName = new ArrayList<String>();
     private ArrayList<String> getDistrictName = new ArrayList<String>();
@@ -164,6 +165,27 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                 TextView maxPriceFilter = dialog.findViewById(R.id.max_price_filter);
                 RadioButton rad_max = dialog.findViewById(R.id.radio_max);
                 RadioButton rad_min = dialog.findViewById(R.id.radio_min);
+//                rad_min.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (rad_min.isChecked() ){
+//                        }
+//                    }
+//                });
+//                rad_max.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if(rad_max.isChecked()) {
+//                            gender = true;
+//                        }
+//                    }
+//                });
+
+//                if(rad_max.isChecked()) {
+//                    gender = false;
+//                }
+//                final Boolean genderUser = gender;
+
 
                 rangeSeekBarPrice.setTickCount(11);
                 rangeSeekBarPrice.setThumbNormalRadius((int) 6f);
@@ -209,8 +231,69 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
 
                         minSizeFilter.setText(minSize + " m2");
                         maxSizeFilter.setText(maxSize + " m2");
-                       if (rad_min.isChecked()){
-                           reference = FirebaseDatabase.getInstance().getReference().child("Room");
+//                       if (rad_min.isChecked()){
+//                           reference = FirebaseDatabase.getInstance().getReference().child("Room");
+//                           Query query = reference.orderByChild("price");
+//                           query.addValueEventListener(new ValueEventListener() {
+//                               @Override
+//                               public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                   list.clear();
+//                                   for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                                       RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+//                                       if (Float.parseFloat(roomModel.getSizeRoom()) >= minSize
+//                                               && Float.parseFloat(roomModel.getSizeRoom()) <= maxSize) {
+//                                           list.add(roomModel);
+//                                           recyclerView.setHasFixedSize(true);
+//                                           RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//                                           adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
+//                                           recyclerView.setLayoutManager(layoutManager);
+//                                           recyclerView.setAdapter(adapter);
+//                                           adapter.notifyDataSetChanged();
+//                                       } else {
+//                                           list.clear();
+//                                       }
+//
+//                                   }
+//                               }
+//
+//                               @Override
+//                               public void onCancelled(@NonNull DatabaseError error) {
+//                                   Log.e("TAG", error.getMessage());
+//                               }
+//                           });
+//                       }else if(rad_max.isChecked()){
+//                           reference = FirebaseDatabase.getInstance().getReference().child("Room");
+//                           Query query = reference.orderByChild("price");
+//                           query.addValueEventListener(new ValueEventListener() {
+//                               @Override
+//                               public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                   list.clear();
+//                                   for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                                       RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+//                                       if (Float.parseFloat(roomModel.getSizeRoom()) >= minSize
+//                                               && Float.parseFloat(roomModel.getSizeRoom()) <= maxSize) {
+//                                           list.add(0,roomModel);
+//                                           recyclerView.setHasFixedSize(true);
+//                                           RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//                                           adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
+//                                           recyclerView.setLayoutManager(layoutManager);
+//                                           recyclerView.setAdapter(adapter);
+//                                           adapter.notifyDataSetChanged();
+//                                       } else {
+//                                           list.clear();
+//                                       }
+//
+//                                   }
+//                               }
+//
+//                               @Override
+//                               public void onCancelled(@NonNull DatabaseError error) {
+//                                   Log.e("TAG", error.getMessage());
+//                               }
+//                           });
+//                       }
+
+                        reference = FirebaseDatabase.getInstance().getReference().child("Room");
                            Query query = reference.orderByChild("price");
                            query.addValueEventListener(new ValueEventListener() {
                                @Override
@@ -239,37 +322,6 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                                    Log.e("TAG", error.getMessage());
                                }
                            });
-                       }else if(rad_max.isChecked()){
-                           reference = FirebaseDatabase.getInstance().getReference().child("Room");
-                           Query query = reference.orderByChild("price");
-                           query.addValueEventListener(new ValueEventListener() {
-                               @Override
-                               public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                   list.clear();
-                                   for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                       RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
-                                       if (Float.parseFloat(roomModel.getSizeRoom()) >= minSize
-                                               && Float.parseFloat(roomModel.getSizeRoom()) <= maxSize) {
-                                           list.add(0,roomModel);
-                                           recyclerView.setHasFixedSize(true);
-                                           RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                                           adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
-                                           recyclerView.setLayoutManager(layoutManager);
-                                           recyclerView.setAdapter(adapter);
-                                           adapter.notifyDataSetChanged();
-                                       } else {
-                                           list.clear();
-                                       }
-
-                                   }
-                               }
-
-                               @Override
-                               public void onCancelled(@NonNull DatabaseError error) {
-                                   Log.e("TAG", error.getMessage());
-                               }
-                           });
-                       }
 
                     }
                 });
@@ -305,7 +357,7 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
     }
 
     private void filterPrice(int min, int max,RadioButton rad_min,RadioButton rad_max) {
-        if (rad_min.isChecked()){
+        if (rad_min.isChecked() == true){
             reference = FirebaseDatabase.getInstance().getReference().child("Room");
             Query query = reference.orderByChild("price");
             query.addValueEventListener(new ValueEventListener() {
@@ -332,7 +384,36 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                     Log.e("TAG", error.getMessage());
                 }
             });
-        }else if(rad_max.isChecked()){
+        }
+
+        if (rad_max.isChecked() == true){
+            reference = FirebaseDatabase.getInstance().getReference().child("Room");
+            Query query = reference.orderByChild("price");
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    list.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+                        if (Double.parseDouble(roomModel.getPrice()) >= min * 1000000
+                                && Double.parseDouble(roomModel.getPrice()) <= max * 1000000) {
+                            list.add(0,roomModel);
+                        }
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("TAG", error.getMessage());
+                }
+            });
+        }else if (rad_max.isChecked()){
             reference = FirebaseDatabase.getInstance().getReference().child("Room");
             Query query = reference.orderByChild("price");
             query.addValueEventListener(new ValueEventListener() {
@@ -360,6 +441,37 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                 }
             });
         }
+
+//        if (rad_max.isChecked()){
+//
+//        }
+//        else {
+//            reference = FirebaseDatabase.getInstance().getReference().child("Room");
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    list.clear();
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+//                        if (Double.parseDouble(roomModel.getPrice()) >= min * 1000000
+//                                && Double.parseDouble(roomModel.getPrice()) <= max * 1000000) {
+//                            list.add(roomModel);
+//                        }
+//                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//                        adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
+//                        recyclerView.setLayoutManager(layoutManager);
+//                        recyclerView.setAdapter(adapter);
+//                        adapter.notifyDataSetChanged();
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                    Log.e("TAG", error.getMessage());
+//                }
+//            });
+//        }
 
     }
 
