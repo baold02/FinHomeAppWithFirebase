@@ -1,12 +1,12 @@
 package com.datn.finhome.Views.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +24,13 @@ import com.datn.finhome.chat.Chat2Fragment;
 import com.datn.finhome.chat.ChatFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -36,45 +42,52 @@ public class MainMenuActivity extends AppCompatActivity {
 //    ChatFragment chatFragment;
     Chat2Fragment chatFragment;
     FirebaseAuth firebaseAuth;
+    DatabaseReference reference;
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
-//        UserDao.getInstance().getUserByUserNameListener(uid, new IAfterGetAllObject() {
-//            @Override
-//            public void iAfterGetAllObject(Object obj) {
-//                if (obj != null) {
-//                    if (uid != null) {
-//                        UserModel user = (UserModel) obj;
-////                    Log.d("tag",user.name);
-//
-//                        if (user.isGender() == true) {
-//
-//                        }else {
-//
-//                        }
-//                    }
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onError(DatabaseError error) {
-//
-//            }
-//        });
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                 UserModel  userModel = dataSnapshot.getValue(UserModel.class);
+                    if (Objects.equals(userModel.getUserID(),uid)) {
+                        Log.d("aaa",userModel.email);
+                        if (userModel.isGender() == true){
+                            setContentView(R.layout.activity_main_menu2);
+                            HomeView = new HomeFragment();
+                            initControl();
+                            setFragment(HomeView);
+
+                        }else if(userModel.isGender() == false){
+                            setContentView(R.layout.activity_main_menu);
+                            HomeView = new HomeFragment();
+                            initControl();
+                            setFragment(HomeView);
+
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                 Log.d("error",error.toString());
+            }
+        });
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
         uid = firebaseAuth.getUid();
-        initControl();
-        HomeView = new HomeFragment();
-        setFragment(HomeView);
+
 
     }
+
 
     private void initControl(){
         fragmentContainer = findViewById(R.id.fragment_container);
