@@ -96,7 +96,6 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
         recyclerView = view.findViewById(R.id.recycle_list_search);
         searchView = view.findViewById(R.id.txt_search);
         toolbar = view.findViewById(R.id.toobar_search);
-        spinnerXa = view.findViewById(R.id.spinnerXa);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -115,12 +114,17 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
-                    list.add(roomModel);
-                    recyclerView.setHasFixedSize(true);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                    adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
+                    if (roomModel.isBrowser() == false){
+
+                    }else {
+                        list.add(roomModel);
+                        recyclerView.setHasFixedSize(true);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        adapter = new RoomAdapter(getContext(), list, roomModel1 -> onClickGoToDetail(roomModel1));
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(adapter);
+                    }
+
                 }
                 LoaderDialog.dismiss();
             }
@@ -479,7 +483,7 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
         spinnerTinh = dialog.findViewById(R.id.spinnerTinh);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIProvincesId.BASE_URL)
+                .baseUrl(APIProvincesId.URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         APIProvincesId provincesId = retrofit.create(APIProvincesId.class);
@@ -502,20 +506,16 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                                 state.setStateName(jsonObject.getString("name"));
                                 getStateData.add(state);
                             }
-
                             for (int i = 0; i < getStateData.size(); i++) {
                                 getStateName.add(getStateData.get(i).getStateName().toString());
                             }
-
                             ArrayAdapter<String> spinStateAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, getStateName);
                             spinStateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerTinh.setAdapter(spinStateAdapter);
                             spinnerTinh.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    Toast.makeText(getContext(), "" + getStateName.get(position), Toast.LENGTH_SHORT).show();
                                     int getStateId = getStateData.get(position).getStcode();
-                                    Log.i("Success", getStateName.get(position));
                                     getDistrict(getStateId, dialog);
 
                                 }
@@ -525,7 +525,7 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
 
                                 }
                             });
-                        } catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -538,16 +538,16 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
             }
         });
     }
-
     private void getDistrict(int getStateId, Dialog dialog) {
         spinnerHuyen = dialog.findViewById(R.id.spinnerHuyen);
 
+        getDistrictName.clear();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIProvincesId.BASE_URL)
+                .baseUrl(APIProvincesId.URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         APIProvincesId provincesId = retrofit.create(APIProvincesId.class);
-        Call<String> call = provincesId.getDistrict();
+        Call<String> call = provincesId.getDistrict(getStateId);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -557,28 +557,28 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
                         try {
                             String getResponse = response.body().toString();
                             List<District> getDistrictData = new ArrayList<District>();
-                            JSONArray jsonArray = new JSONArray(getResponse);
-                            getDistrictData.add(new District(-1, "Chọn Quận, Huyện"));
+                            JSONObject object = new JSONObject(getResponse);
+                            JSONArray jsonArray = object.getJSONArray("districts");
+
+                            getDistrictData.add(new District(-1, "Chọn quận, huyện"));
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 District district = new District();
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                district.setDiscode(object.getInt("code"));
-                                district.setDisName(object.getString("name"));
-                                district.setStcode(object.getInt("province_code"));
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                district.setDiscode(jsonObject.getInt("code"));
+                                district.setDisName(jsonObject.getString("name"));
                                 getDistrictData.add(district);
                             }
-
                             for (int i = 0; i < getDistrictData.size(); i++) {
                                 getDistrictName.add(getDistrictData.get(i).getDisName().toString());
                             }
-
-                            ArrayAdapter<String> spinDistrictAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, getDistrictName);
-                            spinDistrictAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinnerHuyen.setAdapter(spinDistrictAdapter);
+                            ArrayAdapter<String> spinStateAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, getDistrictName);
+                            spinStateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerHuyen.setAdapter(spinStateAdapter);
                             spinnerHuyen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    Toast.makeText(getContext(), "" + getDistrictName.get(position), Toast.LENGTH_SHORT).show();
+                                    String getDistrictNames = getDistrictData.get(position).getDisName();
+                                    adapter.getFilter().filter(getDistrictNames);
 
                                 }
 
@@ -587,7 +587,7 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
 
                                 }
                             });
-                        } catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -599,6 +599,5 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
 
             }
         });
-
     }
 }

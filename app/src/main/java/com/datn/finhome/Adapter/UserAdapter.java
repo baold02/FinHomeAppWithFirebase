@@ -2,6 +2,7 @@ package com.datn.finhome.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,21 +101,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
     private void lastMessage(final  String userId,final TextView lastMessage){
         theLastMessage="default";
+
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    Chat chat = snapshot.getValue(Chat.class);
+                    Chat   chat = snapshot.getValue(Chat.class);
                     if( chat.getReceiver().equals(firebaseUser.getUid()) &&
                             chat.getSender().equals(userId) ||
                             chat.getReceiver().equals(userId) &&
                                     chat.getSender().equals(firebaseUser.getUid())){
                         theLastMessage = chat.getMessage();
                     }
-                }
 
+                }
                 switch (theLastMessage){
                     case "default":
                         lastMessage.setText("No message");
@@ -124,6 +127,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                         break;
                 }
                 theLastMessage="default";
+
+
             }
 
             @Override

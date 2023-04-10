@@ -107,6 +107,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.Holder
                         holder.tvPrice.setText(roomPrice);
                         holder.tvAddress.setText(roomAdr);
                         Picasso.get().load(roomImg).into(holder.imgRoom);
+
                     }
 
                     @Override

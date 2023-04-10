@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,12 +18,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.datn.finhome.Adapter.RoomHostAdapter;
+import com.datn.finhome.Controllers.RoomController;
+import com.datn.finhome.Interfaces.IAfterUpdateObject;
+import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.PayHistory.PayHistory;
 import com.datn.finhome.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
@@ -34,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ThanhToanActivity extends AppCompatActivity {
     Button btnthem;
@@ -47,6 +56,7 @@ public class ThanhToanActivity extends AppCompatActivity {
     String roomId;
     String idName;
     private FirebaseUser user;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +216,8 @@ public class ThanhToanActivity extends AppCompatActivity {
     }
 
     private void AddPayHistoryToFirebase(){
+
+        checkPayment();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         String key = FirebaseDatabase.getInstance().getReference("Payhistory").push().getKey();
         String pattern = "HH:mm MM/dd/yyyy";
@@ -230,5 +242,38 @@ public class ThanhToanActivity extends AppCompatActivity {
                 Toast.makeText(ThanhToanActivity.this, "Đã lưu lại thanh toán" , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    void checkPayment(){
+        reference = FirebaseDatabase.getInstance().getReference("Room");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+                    assert roomModel != null;
+                    if (Objects.equals(roomModel.getUid(),user.getUid())) {
+                        roomModel.setCheckPayment(true);
+                        RoomController.getInstance().updateRoom(roomModel, roomModel.toMapcheckPayment(), new IAfterUpdateObject() {
+                            @Override
+                            public void onSuccess(Object obj) {
+//                                Toast.makeText(ThanhToanActivity.this, "Hiện tin đăng thành công", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("TAG", "onCancelled: " + error.getMessage());
+            }
+        });
+
     }
 }

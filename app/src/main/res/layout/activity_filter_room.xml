@@ -103,18 +103,20 @@
                 app:tick_count="10"
                 app:thumb_normal_radius="6dp"
                 app:thumb_pressed_radius="8dp"/>
-            <Spinner
-                android:id="@+id/spinnerTinh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <Spinner
-                android:id="@+id/spinnerHuyen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <Spinner
-                android:id="@+id/spinnerXa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/spinnerTinh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="170dp"/>
+                <Spinner
+                    android:id="@+id/spinnerHuyen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
 
             <TextView

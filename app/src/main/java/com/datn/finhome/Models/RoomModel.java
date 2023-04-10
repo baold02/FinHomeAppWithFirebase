@@ -20,6 +20,7 @@ public class RoomModel  implements Serializable{
     String Time;
     boolean Browser;
     boolean lock;
+    boolean checkPayment;
 
     public boolean isBrowser() {
         return Browser;
@@ -134,9 +135,23 @@ public class RoomModel  implements Serializable{
         this.lock = lock;
     }
 
+    public boolean isCheckPayment() {
+        return checkPayment;
+    }
+
+    public void setCheckPayment(boolean checkPayment) {
+        this.checkPayment = checkPayment;
+    }
+
     public Map<String, Object> toMapLock() {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("lock",lock);
+        return map;
+    }
+
+    public Map<String, Object> toMapcheckPayment() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("checkPayment",checkPayment);
         return map;
     }
 }

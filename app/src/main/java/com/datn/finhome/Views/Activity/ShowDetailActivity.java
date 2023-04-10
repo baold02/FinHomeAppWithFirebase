@@ -351,6 +351,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                           imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_false));
 
                       }
+
                   }
 
                   @Override

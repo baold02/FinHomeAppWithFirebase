@@ -234,6 +234,7 @@ public class AddRoomActivity extends AppCompatActivity {
                             room.setTime(date);
                             room.setBrowser(false);
                             room.setLock(true);
+                            room.setCheckPayment(false);
                             iAfterGetAllObject.iAfterGetAllObject(room);
                                 progressDialog.setMessage("Đang Đăng Phòng Của Bạn...");
                                 progressDialog.setIndeterminate(true);

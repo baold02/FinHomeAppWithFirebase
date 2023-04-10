@@ -68,7 +68,6 @@ public class FilterRoomActivity extends AppCompatActivity {
 
         spinnerTinh = findViewById(R.id.spinnerTinh);
         spinnerHuyen = findViewById(R.id.spinnerHuyen);
-        spinnerXa = findViewById(R.id.spinnerXa);
 
 
         rangeSeekBarPrice = findViewById(R.id.rangeSeekBarPrice);
@@ -82,69 +81,69 @@ public class FilterRoomActivity extends AppCompatActivity {
         if(rad_min.isChecked()) {
             gender = false;
         }
-        selecAddress();
+//        selecAddress();
 
         btnApply = findViewById(R.id.btn_apply_find_room_filter);
     }
 
-    private void selecAddress() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIProvincesId.BASE_URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        APIProvincesId provincesId = retrofit.create(APIProvincesId.class);
-        Call<String> call = provincesId.getState();
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("Phạm Lâm Vũ", response.body().toString());
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        Log.i("Success", response.body().toString());
-                        try {
-                            String getResponse = response.body().toString();
-                            List<State> getStateData = new ArrayList<State>();
-                            JSONArray jsonArray = new JSONArray(getResponse);
-                            getStateData.add(new State(-1, "Chọn tỉnh, thành phố"));
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                State state = new State();
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                state.setStcode(jsonObject.getInt("code"));
-                                state.setStateName(jsonObject.getString("name"));
-                                getStateData.add(state);
-                            }
-
-                            for (int i = 0; i < getStateData.size(); i++) {
-                                getStateName.add(getStateData.get(i).getStateName().toString());
-                            }
-
-                            ArrayAdapter<String> spinStateAdapter = new ArrayAdapter<String>(FilterRoomActivity.this, android.R.layout.simple_spinner_item, getStateName);
-                            spinStateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinnerTinh.setAdapter(spinStateAdapter);
-                            spinnerTinh.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-    }
+//    private void selecAddress() {
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(APIProvincesId.BASE_URL)
+//                .addConverterFactory(ScalarsConverterFactory.create())
+//                .build();
+//        APIProvincesId provincesId = retrofit.create(APIProvincesId.class);
+//        Call<String> call = provincesId.getState();
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                Log.i("Phạm Lâm Vũ", response.body().toString());
+//                if (response.isSuccessful()) {
+//                    if (response.body() != null) {
+//                        Log.i("Success", response.body().toString());
+//                        try {
+//                            String getResponse = response.body().toString();
+//                            List<State> getStateData = new ArrayList<State>();
+//                            JSONArray jsonArray = new JSONArray(getResponse);
+//                            getStateData.add(new State(-1, "Chọn tỉnh, thành phố"));
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                State state = new State();
+//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                                state.setStcode(jsonObject.getInt("code"));
+//                                state.setStateName(jsonObject.getString("name"));
+//                                getStateData.add(state);
+//                            }
+//
+//                            for (int i = 0; i < getStateData.size(); i++) {
+//                                getStateName.add(getStateData.get(i).getStateName().toString());
+//                            }
+//
+//                            ArrayAdapter<String> spinStateAdapter = new ArrayAdapter<String>(FilterRoomActivity.this, android.R.layout.simple_spinner_item, getStateName);
+//                            spinStateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                            spinnerTinh.setAdapter(spinStateAdapter);
+//                            spinnerTinh.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                                @Override
+//                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onNothingSelected(AdapterView<?> parent) {
+//
+//                                }
+//                            });
+//                        } catch (JSONException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

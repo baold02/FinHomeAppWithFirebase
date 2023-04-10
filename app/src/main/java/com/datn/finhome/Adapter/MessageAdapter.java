@@ -3,6 +3,8 @@ package com.datn.finhome.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.fonts.FontStyle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.compose.ui.text.font.FontWeight;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,9 +28,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
-
 import org.jetbrains.annotations.NotNull;
 
+import java.time.format.TextStyle;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -108,11 +111,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         if(position==list.size()-1){
             if(chat.isIsSeen()){
                 holder.txtSeen.setText("Đã xem");
+
             }else {
                 holder.txtSeen.setText("Đã gửi");
             }
         }else {
             holder.txtSeen.setVisibility(View.GONE);
+
         }
     }
 

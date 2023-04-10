@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class AccountViewFragment extends Fragment implements View.OnClickListener {
     private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount, btnMyRoom,btnPayHistory;
     private TextView tvName,tvPhone,tvDiaChi;
     private FirebaseUser firebaseUser;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference, getDatabaseReference;
     ImageView ImgAvt;
     private String userId;
     FirebaseAuth firebaseAuth;
-    View layout;
+    View view;
+    UserModel userModel2;
     private Context mContext;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,34 +58,67 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.fragment_user, container, false);
+         view =  inflater.inflate(R.layout.fragment_user, container, false);
+
+        getDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
+//        getDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    UserModel  userModel = dataSnapshot.getValue(UserModel.class);
+//                    if (Objects.equals(userModel.getUserID(),userId)) {
+//                        userModel2 = userModel;
+//                        Log.d("aaa",userModel.email);
+//                        if (userModel.isGender() == true){
+//                            initControl2();
+//                            getInformationUser();
+//                            return view;
+//
+//                        }else if(userModel.isGender() == false){
+//                            layout = inflater.inflate(R.layout.fragment_user, container, false);
+//                            initControl();
+//                            getInformationUser();
+//
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.d("error",error.toString());
+//            }
+//        });
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         userId = firebaseUser.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         initControl();
         getInformationUser();
-//        getInformationGoogle();
-        return layout;
+        return view;
+
+
     }
     private void initControl() {
-        btnLogout = layout.findViewById(R.id.btnLogout);
-        btnMyRoom = layout.findViewById(R.id.btn_myroom);
-        btnChangePass = layout.findViewById(R.id.btnChangePass);
-        btnFavorite = layout.findViewById(R.id.btnFavourite3);
-        btnSettingAccount = layout.findViewById(R.id.btnSettingAccount);
-        btnPayHistory = layout.findViewById(R.id.btnPayHistory);
-        tvName = layout.findViewById(R.id.tvNameUser);
-        tvPhone = layout.findViewById(R.id.tvSdtUser);
-        tvDiaChi = layout.findViewById(R.id.tvAddressUser);
-        ImgAvt = layout.findViewById(R.id.imgUser);
+        btnLogout = view.findViewById(R.id.btnLogout);
+        btnMyRoom = view.findViewById(R.id.btn_myroom);
+        btnChangePass = view.findViewById(R.id.btnChangePass);
+        btnFavorite = view.findViewById(R.id.btnFavourite3);
+        btnSettingAccount = view.findViewById(R.id.btnSettingAccount);
+        btnPayHistory = view.findViewById(R.id.btnPayHistory);
+        tvName = view.findViewById(R.id.tvNameUser);
+        tvPhone = view.findViewById(R.id.tvSdtUser);
+        tvDiaChi = view.findViewById(R.id.tvAddressUser);
+        ImgAvt = view.findViewById(R.id.imgUser);
 
         btnMyRoom.setOnClickListener(v -> startActivity(new Intent(getActivity(), HostActivity.class)));
-        btnFavorite.setOnClickListener(view -> startActivity(new Intent(getActivity(), FavoriteActivity.class)));
+        btnFavorite.setOnClickListener(v -> startActivity(new Intent(getActivity(), FavoriteActivity.class)));
         btnSettingAccount.setOnClickListener(v-> {startActivity(new Intent(getActivity(), AccountInfoActivity.class));});
-        btnPayHistory.setOnClickListener(view -> startActivity(new Intent(getActivity(), PayHistoryActivity.class)));
-        btnChangePass.setOnClickListener(view -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
+        btnPayHistory.setOnClickListener(v -> startActivity(new Intent(getActivity(), PayHistoryActivity.class)));
+        btnChangePass.setOnClickListener(v -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
         btnLogout.setOnClickListener(this);
     }
+
 
     private void getInformationUser(){
       databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
@@ -100,6 +137,7 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
                     Picasso.get().load(avatar).placeholder(R.mipmap.ic_launcher).into(ImgAvt);
                     tvDiaChi.setText(address);
                 }
+
             }
 
             @Override

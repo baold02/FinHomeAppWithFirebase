@@ -88,12 +88,20 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         }
         holder.tvAddress.setText(roomModel.getAddress());
         Picasso.get().load(roomModel.getImg()).placeholder(R.mipmap.ic_launcher).into(holder.imgRoom);
-        holder.tvDayTin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowDialog(roomModel);
-            }
-        });
+
+        if (roomModel.isCheckPayment() == true){
+            holder.tvDayTin.setText("Đã đẩy tin");
+            holder.tvTrangThai.setTextColor(Color.BLACK);
+        }
+        if (roomModel.isCheckPayment() == false){
+            holder.tvDayTin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowDialog(roomModel);
+                }
+            });
+        }
+
 
         if (roomModel.isBrowser() == false){
             holder.tvTrangThai.setText("Phòng đang chờ duyệt");
@@ -104,13 +112,14 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
 
         }
 
-        if (roomModel.isLock()) {
+        if (roomModel.isLock() == false) {
            holder.btnEnable.setChecked(true);
-            holder.btnEnable.setBackgroundColor(Color.GREEN);
-
-        } else {
-            holder.btnEnable.setChecked(false);
             holder.btnEnable.setBackgroundColor(Color.RED);
+
+        }
+        if (roomModel.isLock() == true){
+            holder.btnEnable.setChecked(false);
+            holder.btnEnable.setBackgroundColor(Color.GREEN);
         }
 
 
@@ -118,7 +127,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
                 if (!holder.btnEnable.isChecked()) {
                     AlertDialog.Builder  builder =new AlertDialog.Builder(context);
                     builder.setTitle("Ẩn tin đăng")
-                            .setMessage("Bạn chắc chắn muốn ẩn phòng này chứ")
+                            .setMessage("Khi đã có người hẹn xem phòng , hoặc không muốn tin xuất hiện trên findHome, hãy chọn ẩn tin.")
                             .setPositiveButton("Ẩn tin", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
