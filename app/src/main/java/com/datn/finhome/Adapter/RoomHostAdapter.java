@@ -113,18 +113,19 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         }
 
         if (roomModel.isLock() == false) {
-           holder.btnEnable.setChecked(true);
-            holder.btnEnable.setBackgroundColor(Color.RED);
+            holder.tvAn.setTextColor(Color.BLUE);
+            holder.tvAn.setText("Hiện tin");
 
         }
         if (roomModel.isLock() == true){
-            holder.btnEnable.setChecked(false);
-            holder.btnEnable.setBackgroundColor(Color.GREEN);
+            holder.tvAn.setTextColor(Color.GRAY);
+            holder.tvAn.setText("Ẩn tin");
+
         }
 
 
-           holder.btnEnable.setOnClickListener(v -> {
-                if (!holder.btnEnable.isChecked()) {
+           holder.tvAn.setOnClickListener(v -> {
+                if (roomModel.isLock() == true) {
                     AlertDialog.Builder  builder =new AlertDialog.Builder(context);
                     builder.setTitle("Ẩn tin đăng")
                             .setMessage("Khi đã có người hẹn xem phòng , hoặc không muốn tin xuất hiện trên findHome, hãy chọn ẩn tin.")
@@ -153,9 +154,11 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
                                 }
                             })
                             .show();
+                    holder.tvAn.setText("Ẩn tin");
+
 
                 }
-                if (holder.btnEnable.isChecked()) {
+                if (roomModel.isLock() == false) {
                     roomModel.setLock(true);
                     RoomController.getInstance().updateRoom(roomModel, roomModel.toMapLock(), new IAfterUpdateObject() {
                         @Override
@@ -168,6 +171,8 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
 
                         }
                     });
+                    holder.tvAn.setText("Hiện tin");
+
                 }
             });
 
@@ -238,7 +243,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener{
         private LinearLayout container;
         private AppCompatImageView imgRoom;
-        private TextView tvName, tvPrice, tvAddress, tvDayTin, tvTrangThai;
+        private TextView tvName, tvPrice, tvAddress, tvDayTin, tvTrangThai,tvAn;
         private ToggleButton btnEnable;
 
         private AppCompatImageButton menu_ctr;
@@ -252,7 +257,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             tvTrangThai = itemView.findViewById(R.id.tvTrangThai);
             menu_ctr = itemView.findViewById(R.id.menu_ctr);
             container = itemView.findViewById(R.id.containerRoom);
-            btnEnable = itemView.findViewById(R.id.btnEnable);
+            tvAn = itemView.findViewById(R.id.tvAntin);
 
 
             menu_ctr.setOnClickListener(v -> showMenu(v));

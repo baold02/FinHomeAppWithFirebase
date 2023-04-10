@@ -75,18 +75,16 @@
                     android:textColor="@color/red"
                     android:textSize="10dp"
                     android:textStyle="bold" />
-                <ToggleButton
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/btnEnable"
-                    android:src="@drawable/ic_launcher_background"
-                    android:textOff="Hiện tin"
-                    android:textOn="Ẩn tin"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginBottom="20dp"
-                    android:textSize="12sp"
-                    android:textColor="@color/white"
-                    android:layout_width="75dp"
-                    android:layout_height="38dp"/>
+                <TextView
+                    android:id="@+id/tvAntin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Ân ngay"
+                    android:textColor="@color/red"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
