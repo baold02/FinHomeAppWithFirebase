@@ -49,7 +49,7 @@
             android:layout_below="@+id/tvNameUser"
             android:layout_alignStart="@+id/tvNameUser"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="20dp">
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -71,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llSdt"
+            android:layout_marginTop="10dp"
             android:layout_alignStart="@+id/llSdt">
             <ImageView
                 android:layout_width="13dp"

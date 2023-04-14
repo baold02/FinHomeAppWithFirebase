@@ -7,13 +7,19 @@
     android:layout_marginBottom="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:elevation="8dp"
+        app:cardCornerRadius="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgRoom"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:scaleType="fitXY"
             android:src="@drawable/bg_room"
             />
+    </androidx.cardview.widget.CardView>
 
        <LinearLayout
            android:layout_width="wrap_content"
@@ -23,6 +29,8 @@
 
                <TextView
                    android:id="@+id/tvNameRoom"
+                   android:ellipsize="end"
+                   android:maxLines="2"
                    android:layout_width="220dp"
                    android:textStyle="bold"
                    android:layout_height="wrap_content"
@@ -39,13 +47,15 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="1.000.000đ"
-                   android:textColor="#009B10"
+                   android:textColor="@color/bg_user_top"
                    android:textSize="15dp"
                 />
 
                <TextView
                    android:layout_marginStart="10dp"
                    android:id="@+id/tvAddressRoom"
+                   android:ellipsize="end"
+                   android:maxLines="2"
                    android:layout_width="220dp"
                    android:layout_height="wrap_content"
                    android:layout_marginBottom="10dp"

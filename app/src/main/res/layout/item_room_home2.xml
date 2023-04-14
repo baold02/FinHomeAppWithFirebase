@@ -7,20 +7,13 @@
     android:layout_width="wrap_content"
     android:layout_marginBottom="10dp"
     android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
-            android:elevation="8dp"
-            app:cardCornerRadius="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgRoom"
-                    android:layout_width="100dp"
-                    android:scaleType="fitXY"
-                    android:layout_height="100dp"
-                    android:src="@drawable/bg_room"
-                    />
-        </androidx.cardview.widget.CardView>
-
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgRoom"
+            android:layout_width="100dp"
+            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_room"
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,8 +23,6 @@
 
                 <TextView
                     android:id="@+id/tvNameRoom"
-                    android:ellipsize="end"
-                    android:maxLines="2"
                     android:layout_width="220dp"
                     android:textStyle="bold"
                     android:layout_height="wrap_content"
@@ -48,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.000.000đ"
-                    android:textColor="@color/bg_user_top"
+                    android:textColor="#009B10"
                     android:textSize="15dp"
                     />
 
@@ -56,17 +47,11 @@
                     android:layout_marginStart="10dp"
                     android:id="@+id/tvAddressRoom"
                     android:layout_width="220dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="Cầu Giấy, Hà Nội"
                     android:textSize="10dp" />
 
-                <View
-                    android:background="#B1B1B1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
 
         </LinearLayout>
 
