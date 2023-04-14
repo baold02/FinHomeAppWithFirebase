@@ -34,7 +34,7 @@ public class PayHistoryAdapter extends RecyclerView.Adapter<PayHistoryAdapter.Pa
     public void onBindViewHolder(@NonNull PayViewholder holder, int position) {
         PayHistory payHistory = list.get(position);
         if (payHistory == null) {
-            return;
+               return;
         }
         holder.userName.setText("Phí đẩy tin: "+payHistory.getTitle());
         holder.payTime.setText(payHistory.getPayTime());

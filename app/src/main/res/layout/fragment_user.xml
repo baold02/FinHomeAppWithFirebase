@@ -96,89 +96,205 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_myroom"
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:id="@+id/ln_BtnRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/_15sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="Phòng của bạn"
-        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/room"
+            android:layout_marginRight="5dp"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnFavourite3"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_myroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/_18sdp"
+            android:text="Phòng của bạn"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+
+        android:id="@+id/ln_favotire"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="@string/favourite"
-        android:textAllCaps="false"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_myroom"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        app:layout_constraintTop_toBottomOf="@+id/ln_BtnRoom"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/favorite"
+            android:layout_marginRight="5dp"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSettingAccount"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFavourite3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@color/white"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/_18sdp"
+            android:text="@string/favourite"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:id="@+id/ln_Setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="@string/settingAccount"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btnFavourite3"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnChangePass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="@string/changePass"
-        android:textAllCaps="false"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnSettingAccount"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettingAccount"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ln_favotire"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/setting"
+            android:layout_marginRight="5dp"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnPayHistory"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSettingAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@color/white"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/_18sdp"
+            android:text="Cài đặt tài khoản"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:id="@+id/ln_doi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="Lịch sử thanh toán"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btnChangePass"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ln_Setting"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/forgotpass"
+            android:layout_marginRight="5dp"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogout"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnChangePass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@color/white"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/_18sdp"
+            android:text="Đổi mật khẩu"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:id="@+id/ln_ls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="@string/logout"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="@+id/btnChangePass"
-        app:layout_constraintStart_toStartOf="@+id/btnPayHistory"
-        app:layout_constraintTop_toBottomOf="@+id/btnPayHistory"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ln_doi"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/payment"
+            android:layout_marginRight="5dp"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPayHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@color/white"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/_18sdp"
+            android:text="Lịch sử thanh toán"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ln_ls"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/logout"
+            android:layout_marginRight="5dp"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@color/white"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/_18sdp"
+            android:text="Đăng xuất"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
